@@ -1,0 +1,9 @@
+../Core/Src/main.c:46:5:main	8	static
+../Core/Src/main.c:83:6:lidar_init	8	static
+../Core/Src/main.c:91:6:lidar_trigger	8	static
+../Core/Src/main.c:95:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/main.c:124:6:SystemClock_Config	112	static
+../Core/Src/main.c:173:13:MX_SPI1_Init	8	static
+../Core/Src/main.c:199:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:222:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:280:6:Error_Handler	8	static,ignoring_inline_asm
