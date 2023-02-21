@@ -1,0 +1,14 @@
+18:42:43 **** Incremental Build of configuration Debug for project Blind_Spot_STM32CubeIDE ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0plus -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L010x4 -c -I../Core/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc -I../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Blind_Spot_STM32CubeIDE.elf" @"objects.list"   -mcpu=cortex-m0plus -T"C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\STM32L010F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Blind_Spot_STM32CubeIDE.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Blind_Spot_STM32CubeIDE.elf
+ 
+arm-none-eabi-size   Blind_Spot_STM32CubeIDE.elf 
+arm-none-eabi-objdump -h -S  Blind_Spot_STM32CubeIDE.elf  > "Blind_Spot_STM32CubeIDE.list"
+   text	   data	    bss	    dec	    hex	filename
+  14240	     24	   1800	  16064	   3ec0	Blind_Spot_STM32CubeIDE.elf
+Finished building: default.size.stdout
+ 
+Finished building: Blind_Spot_STM32CubeIDE.list
+ 

@@ -60,8 +60,8 @@ all: main-build
 main-build: Blind_Spot_STM32CubeIDE.elf secondary-outputs
 
 # Tool invocations
-Blind_Spot_STM32CubeIDE.elf Blind_Spot_STM32CubeIDE.map: $(OBJS) $(USER_OBJS) C:\Users\madpr\OneDrive\Documents\OutOfSight\Blind_Spot_STM32CubeIDE\STM32L010F4PX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Blind_Spot_STM32CubeIDE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\madpr\OneDrive\Documents\OutOfSight\Blind_Spot_STM32CubeIDE\STM32L010F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Blind_Spot_STM32CubeIDE.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Blind_Spot_STM32CubeIDE.elf Blind_Spot_STM32CubeIDE.map: $(OBJS) $(USER_OBJS) C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\STM32L010F4PX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Blind_Spot_STM32CubeIDE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\STM32L010F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Blind_Spot_STM32CubeIDE.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
