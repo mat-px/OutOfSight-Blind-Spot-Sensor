@@ -45,6 +45,7 @@ void lidar_trigger();
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void send_command(uint8_t command[]);
 char* hex_to_char(uint8_t hex);
+char[]* hex_to_char(uint8_t hex);
 
 int main(void)
 {
@@ -92,12 +93,11 @@ char* hex_to_char(uint8_t hex){
 }
 
 void send_command(uint8_t command[]){
-	int SIZE = sizeof(&command);
-	char* tmp[SIZE];
+	char* tmp[1];
 	for(int i = 0; i < sizeof(&command); i++){
-		tmp[i] = hex_to_char(command[i]);
+		tmp[1] = hex_to_char(command[i]);
+		HAL_UART_Transmit(&huart2, (uint8_t*)&tmp[1], 1, HAL_MAX_DELAY);
 	}
-	HAL_UART_Transmit(&huart2, (uint8_t*)&tmp, SIZE, HAL_MAX_DELAY);
 }
 
 void lidar_init() {
