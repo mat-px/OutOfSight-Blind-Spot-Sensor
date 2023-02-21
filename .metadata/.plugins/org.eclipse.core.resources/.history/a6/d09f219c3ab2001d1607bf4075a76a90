@@ -88,8 +88,8 @@ int main(void)
 
 char* hex_to_char(uint8_t hex){
 	char* tmp[1];
-	itoa(hex, tmp[1], 16);
-//	sprintf(tmp[1], "%x", hex); // Not enough storage
+	sprintf(tmp[1], "%x", hex);
+
 	return tmp[1];
 }
 

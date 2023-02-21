@@ -29,8 +29,8 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 uint8_t rx_buffer[RX_BUFFER_SIZE]; // Receive buffer
-uint8_t trig_cmd[4] = {0x5A, 0x04, 0x04, 0x00};  // Trigger frame detection
-uint8_t soft_reset[4] = {0x5A, 0x04, 0x02, 0x00}; // Soft reset
+char trig_cmd[4] = {0x5A, 0x04, 0x04, 0x00};  // Trigger frame detection
+char soft_reset[4] = {0x5A, 0x04, 0x02, 0x00}; // Soft reset
 uint8_t set_output_format[5] = {0x5A, 0x05, 0x05, 0x01, 0x00}; // Sets to cm
 uint8_t set_framerate_cmd[6] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; // Set framerate to 0
 uint8_t save_data_cmd[4] = {0x5A, 0x04, 0x11, 0x00}; // Save data to sensor
@@ -43,7 +43,7 @@ static void MX_USART2_UART_Init(void);
 void lidar_init();
 void lidar_trigger();
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
-void send_command(uint8_t command[]);
+void send_command(char command_byte);
 char* hex_to_char(uint8_t hex);
 
 int main(void)
@@ -75,7 +75,10 @@ int main(void)
 
   while (1)
   {
-	  send_command(soft_reset);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)&soft_reset, sizeof(soft_reset), HAL_MAX_DELAY);
+//	  for(int i = 0; i<sizeof(soft_reset); i++){
+//	  		  send_command(soft_reset[i]);
+//	  	  }
 	  HAL_Delay(500);
 //	  for(int i = 0; i<sizeof(trig_cmd); i++){
 //		  send_command(i);
@@ -87,19 +90,15 @@ int main(void)
 }
 
 char* hex_to_char(uint8_t hex){
-	char* tmp[1];
-	itoa(hex, tmp[1], 16);
-//	sprintf(tmp[1], "%x", hex); // Not enough storage
-	return tmp[1];
+	char* tmp;
+	sprintf(tmp, "%x", i);
+
+	return tmp;
 }
 
 
-void send_command(uint8_t command[]){
-	char* tmp[1];
-	for(int i = 0; i < sizeof(&command); i++){
-		tmp[1] = hex_to_char(command[i]);
-		HAL_UART_Transmit(&huart2, (uint8_t*)&tmp[1], 1, HAL_MAX_DELAY);
-	}
+void send_command(char command_byte){
+	HAL_UART_Transmit(&huart2, (uint8_t*)&command_byte, 1, HAL_MAX_DELAY);
 }
 
 
