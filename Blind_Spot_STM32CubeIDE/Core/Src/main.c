@@ -22,12 +22,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-#define RX_BUFFER_SIZE 8
+#define RX_BUFFER_SIZE 9
 
 SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
+volatile uint32_t rx_buffer_index = 0;
 uint8_t rx_buffer[RX_BUFFER_SIZE]; // Receive buffer
 uint8_t trig_cmd[4] = {0x5A, 0x04, 0x04, 0x00};  // Trigger frame detection
 uint8_t soft_reset[4] = {0x5A, 0x04, 0x02, 0x00}; // Soft reset
@@ -35,16 +35,15 @@ uint8_t set_output_format[5] = {0x5A, 0x05, 0x05, 0x01, 0x00}; // Sets to cm
 uint8_t set_framerate_cmd[6] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; // Set framerate to 0
 uint8_t save_data_cmd[4] = {0x5A, 0x04, 0x11, 0x00}; // Save data to sensor
 
-
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
-void lidar_init();
-void lidar_trigger();
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
-void send_command(uint8_t command[]);
-char* hex_to_char(uint8_t hex);
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
+void send(uint8_t* data, uint16_t len);
+void receive(uint8_t* data, uint16_t len);
 
 int main(void)
 {
@@ -54,88 +53,49 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
 
-  //Enable UART
-  HAL_NVIC_SetPriority(USART2_IRQn, 0, 1);
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART2_IRQn);
-//  USART2_IRQHandler();
 
-  // Start transmission
-  HAL_UART_Receive_IT(&huart2, rx_buffer, sizeof(rx_buffer));
-
-//  lidar_init(); // initialize the lidar module
-//  HAL_Delay(500);
-//  data_frame = 1;
-//  HAL_UART_Receive_IT(&huart2, rx_buffer, 9); // start the first reception
-
-//  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-//  HAL_Delay(1000);
-//  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+  receive(rx_buffer, RX_BUFFER_SIZE);
 
   while (1)
   {
-	  send_command(soft_reset);
-	  HAL_Delay(500);
-//	  for(int i = 0; i<sizeof(trig_cmd); i++){
-//		  send_command(i);
-//	  }
-//	  HAL_Delay(250);
-//	  lidar_trigger();          // trigger detection
-//	  HAL_Delay(1000);          // wait for detection to complete
+	  send(trig_cmd, sizeof(trig_cmd));
+	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+	  HAL_Delay(1000);
+	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
   }
 }
 
-char* hex_to_char(uint8_t hex){
-	char* tmp[1];
-	itoa(hex, tmp[1], 16);
-//	sprintf(tmp[1], "%x", hex); // Not enough storage
-	return tmp[1];
-}
-
-void send_command(uint8_t command[]){
-	int SIZE = sizeof(&command);
-	char* tmp[SIZE];
-	for(int i = 0; i < sizeof(&command); i++){
-		tmp[i] = hex_to_char(command[i]);
-	}
-	HAL_UART_Transmit(&huart2, (uint8_t*)&tmp, SIZE, HAL_MAX_DELAY);
-}
-
-void lidar_init() {
-//	HAL_UART_Transmit(&huart2, soft_reset, sizeof(soft_reset), 100);
-	HAL_Delay(500);
-//	HAL_UART_Transmit(&huart2, set_output_format, sizeof(set_output_format), 100);
-//	HAL_UART_Transmit(&huart2, set_framerate_cmd, sizeof(set_framerate_cmd), 100);
-//	HAL_UART_Transmit(&huart2, save_data_cmd, sizeof(save_data_cmd), 100);
-}
-
-void lidar_trigger() {
-//  HAL_UART_Transmit(&huart2, trig_cmd, sizeof(trig_cmd), 100);
-}
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	//float distance_m;
-	//uint16_t distance_cm;
-	HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-
+	char msg[] = "Received\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
 	if(huart->Instance == huart2.Instance){
-		HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
-		HAL_UART_Receive_IT(&huart2, rx_buffer, sizeof(rx_buffer));
-	}
+		// Store the received data directly in the buffer
+		rx_buffer[rx_buffer_index] = (uint8_t)(huart->Instance->RDR & 0xFF);
+		rx_buffer_index++;
 
-//  if (huart->Instance == huart2.Instance && data_frame == 1) {
-//    if (rx_buffer[0] == 0x59) {  // check if header bytes are correct
-//      distance_cm = (rx_buffer[2] + rx_buffer[3]);
-//      distance_m = distance_cm / 100.0;
-//      if (distance_m < 1) {  // less than 1 meter away
-//    	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-//      } else {
-//    	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
-//      }
-//    }
-//    HAL_UART_Receive_IT(&huart2, rx_buffer, 9);  // start another reception
-//  }
+	    if (rx_buffer_index >= RX_BUFFER_SIZE)
+	    {
+	      rx_buffer_index = 0;
+//	      printf("Received data: %s\n", rx_buffer);
+	    }
+	}
+	receive(rx_buffer, RX_BUFFER_SIZE);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+	char msg[] = "Sent\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+}
+
+void send(uint8_t* data, uint16_t len){
+  HAL_UART_Transmit_IT(&huart2, data, len);
+}
+
+void receive(uint8_t* data, uint16_t len){
+  HAL_UART_Receive_IT(&huart2, data, len);
 }
 
 /**
