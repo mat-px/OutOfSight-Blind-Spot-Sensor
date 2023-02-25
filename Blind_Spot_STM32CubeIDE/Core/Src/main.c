@@ -18,9 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 #define RX_BUFFER_SIZE 9
 
@@ -28,12 +25,41 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 volatile uint32_t rx_buffer_index = 0;
-uint8_t rx_buffer[RX_BUFFER_SIZE]; // Receive buffer
-uint8_t trig_cmd[4] = {0x5A, 0x04, 0x04, 0x00};  // Trigger frame detection
-uint8_t soft_reset[4] = {0x5A, 0x04, 0x02, 0x00}; // Soft reset
-uint8_t set_output_format[5] = {0x5A, 0x05, 0x05, 0x01, 0x00}; // Sets to cm
-uint8_t set_framerate_cmd[6] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; // Set framerate to 0
-uint8_t save_data_cmd[4] = {0x5A, 0x04, 0x11, 0x00}; // Save data to sensor
+uint8_t rx_buffer[RX_BUFFER_SIZE] = {0}; // Receive buffer
+char char_array[9];
+volatile uint8_t transmit = 0;
+
+
+//----------Beginning of LiDAR commands----------
+//uint8_t getVersionCMD[] = {0x5A, 0x04, 0x01, 0x00}; //Get version (0x01)
+
+uint8_t softResetCMD[] = {0x5A, 0x04, 0x02, 0x00}; //Soft reset (0x02)
+
+uint8_t sampleFreq0HzCMD[] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; //Sample frequency 0Hz (0x03)
+//uint8_t sampleFreq10HzCMD[] = {0x5A, 0x06, 0x03, 0x0A, 0x00, 0x00}; //Sample frequency 10Hz (0x03)
+//uint8_t sampleFreq250HzCMD[] = {0x5A, 0x06, 0x03, 0xFA, 0x00, 0x00}; //Sample frequency 250Hz (0x03)
+uint8_t sampleTriggerCMD[] = {0x5A, 0x04, 0x04, 0x00}; //Sample trigger (0x04)
+uint8_t outForm9B_cmCMD[] = {0x5A, 0x05, 0x05, 0x01, 0x00}; //Output format 9-byte/cm (0x05)
+//uint8_t outForm8B_cmCMD[] = {0x5A, 0x05, 0x05, 0x09, 0x00}; //Output format 8-byte/cm (0x05)
+//uint8_t baud9600CMD[] = {0x5A, 0x08, 0x06, 0x80, 0x25, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud19200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x4B, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud38400CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x96, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud57600CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xE1, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud115200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xC2, 0x01, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t outputEnableCMD[] = {0x5A, 0x05, 0x07, 0x01, 0x00}; //Output enable (0x07)
+//uint8_t outputDisableCMD[] = {0x5A, 0x05, 0x07, 0x00, 0x00}; //Output disable (0x07)
+//uint8_t checksumEnableCMD[] = {0x5A, 0x05, 0x08, 0x01, 0x00}; //Enable checksum comparison (0x08)
+//uint8_t checksumDisableCMD[] = {0x5A, 0x05, 0x08, 0x00, 0x67}; //Disable checksum comparison (0x08)
+//uint8_t resDefSetCMD[] = {0x5A, 0x04, 0x10, 0x00}; //Restore default settings (0x10)
+//uint8_t saveSettingsCMD[] = {0x5A, 0x04, 0x11, 0x00}; //Save current settings (0x11)
+//uint8_t barcodeCMD[] = {0x5A, 0x04, 0x12, 0x00}; //Output product barcode (0x12)
+//uint8_t getFullVersionCMD[] = {0x5A, 0x04, 0x14, 0x00}; //Get full version (0x14)
+
+uint8_t powerSavingEN1HzCMD[] = {0x5A, 0x06, 0x35, 0x01, 0x00, 0x00}; //Enable power saving mode and measure at 1Hz (0x35)
+uint8_t powerSavingEN10HzCMD[] = {0x5A, 0x06, 0x35, 0x0A, 0x00, 0x00}; //Enable power saving mode and measure at 10Hz (0x35)
+uint8_t ultraLowPwrModeEnableCMD[] = {0x5A, 0x05, 0x58, 0x01, 0x00}; //Enable ultra low power mode (0x58)
+uint8_t ultraLowPwrModeDisableCMD[] = {0x5A, 0x05, 0x58, 0x00, 0x00}; //Disable ultra low power mode - Send 5 times repeatedly (0x58)
+//----------End of LiDAR commands----------
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -44,6 +70,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 void send(uint8_t* data, uint16_t len);
 void receive(uint8_t* data, uint16_t len);
+void lidar_init();
+void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array);
 
 int main(void)
 {
@@ -56,46 +84,105 @@ int main(void)
   HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART2_IRQn);
 
-  receive(rx_buffer, RX_BUFFER_SIZE);
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+
+  lidar_init();
 
   while (1)
   {
-	  send(trig_cmd, sizeof(trig_cmd));
-	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-	  HAL_Delay(1000);
-	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+//	  char msg[] = "\n\r\n\rSent: ";
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+//	  hex_to_char(sampleTriggerCMD, sizeof(sampleTriggerCMD), char_array);
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), HAL_MAX_DELAY);
+//
+//	  char msg0[] = "\n\rReceived: ";
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg0, strlen(msg0), HAL_MAX_DELAY);
+//	  hex_to_char(rx_buffer, sizeof(rx_buffer), char_array);
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), HAL_MAX_DELAY);
+//
+////	  memset(rx_buffer, 0, RX_BUFFER_SIZE);
+//	  char msg1[] = "\n\rProof of Emtry rx_buffer: ";
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg1, strlen(msg1), HAL_MAX_DELAY);
+//	  hex_to_char(rx_buffer, sizeof(rx_buffer), char_array);
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), HAL_MAX_DELAY);
+
+	  if(transmit == 0){
+		  HAL_UART_Receive_IT(&huart2, &rx_buffer[rx_buffer_index], 1);
+		  HAL_UART_Transmit(&huart2, sampleTriggerCMD, sizeof(sampleTriggerCMD), 5000);
+	  }
+
+
+//  	  if(rx_buffer[0] == 0x5A){
+//  			  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+//  			  HAL_Delay(1000);
+//  			  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+//  			__HAL_UART_CLEAR_FLAG(&huart2, UART_FLAG_RXNE);
+//  	  }
+
+  	  HAL_Delay(1000);
+//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+//	  HAL_Delay(1000);
+//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
   }
 }
 
+void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array)
+{
+    for (int i = 0; i < hex_len; i++)
+    {
+        char_array[2 * i]     = hex_array[i] >> 4;
+        char_array[2 * i + 1] = hex_array[i] & 0x0f;
+        char_array[2 * i]     += char_array[2 * i] > 9 ? 'A' - 10 : '0';
+        char_array[2 * i + 1] += char_array[2 * i + 1] > 9 ? 'A' - 10 : '0';
+    }
+    char_array[2 * hex_len] = '\0';
+}
+
+
+void lidar_init(){
+	//Send soft reset command
+	HAL_UART_Transmit(&huart2, softResetCMD, sizeof(softResetCMD), 100);
+	HAL_Delay(500);
+
+	//Send sample at 0Hz command
+	HAL_UART_Transmit(&huart2, sampleFreq0HzCMD, sizeof(sampleFreq0HzCMD), 100);
+	HAL_Delay(500);
+
+	//Send output format 9-byte/cm
+	HAL_UART_Transmit(&huart2, outForm9B_cmCMD, sizeof(outForm9B_cmCMD), 100);
+	HAL_Delay(500);
+}
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	char msg[] = "Received\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
-	if(huart->Instance == huart2.Instance){
-		// Store the received data directly in the buffer
-		rx_buffer[rx_buffer_index] = (uint8_t)(huart->Instance->RDR & 0xFF);
-		rx_buffer_index++;
-
-	    if (rx_buffer_index >= RX_BUFFER_SIZE)
-	    {
-	      rx_buffer_index = 0;
-//	      printf("Received data: %s\n", rx_buffer);
-	    }
+	if(rx_buffer_index < RX_BUFFER_SIZE - 1) {
+		transmit = 1;
+		rx_buffer[rx_buffer_index++] = huart->Instance->RDR;
+		HAL_UART_Receive_IT(&huart2, &rx_buffer[rx_buffer_index], 1);
+	} else {
+		char msg[] = "\n\rReceived: ";
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+		hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
+		HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
+		transmit = 0;
 	}
-	receive(rx_buffer, RX_BUFFER_SIZE);
+
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	char msg[] = "Sent\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t*)msg, sizeof(msg), HAL_MAX_DELAY);
+	if(huart->Instance == huart2.Instance){
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+	}
 }
 
 void send(uint8_t* data, uint16_t len){
-  HAL_UART_Transmit_IT(&huart2, data, len);
+	HAL_UART_Transmit(&huart2, data, len, 100);
+//	HAL_UART_Transmit_IT(&huart2, data, len);
 }
 
 void receive(uint8_t* data, uint16_t len){
-  HAL_UART_Receive_IT(&huart2, data, len);
+	HAL_UART_Receive(&huart2, data, len, 5000);
+//  HAL_UART_Receive_IT(&huart2, data, len);
 }
 
 /**
