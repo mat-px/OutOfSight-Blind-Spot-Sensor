@@ -949,3 +949,283 @@
 2023-02-25 15:07:04,956 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
 2023-02-25 15:07:05,019 [INFO] NvicIntPanel:100 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
 2023-02-25 15:07:05,034 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:09:53,630 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:09:53,631 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:09:53,668 [INFO] NvicIntPanel:100 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2023-02-25 15:09:53,684 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:10:23,157 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 619294944 Bytes (783286272)
+2023-02-25 15:10:25,344 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 625587944 Bytes (783286272)
+2023-02-25 15:10:28,595 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 647608040 Bytes (783286272)
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SPI
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2023-02-25 15:10:29,157 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: DMA
+2023-02-25 15:10:29,157 [INFO] CodeGenerator:692 - code generatio: config db path: C:\ST\STM32CubeIDE_1.11.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.7.0.202211181646\\db\
+2023-02-25 15:10:29,188 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:10:29,485 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\license.tmp_save
+2023-02-25 15:10:30,001 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\license.tmp
+2023-02-25 15:10:30,204 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\gpio.tmp_save
+2023-02-25 15:10:30,391 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\gpio.tmp
+2023-02-25 15:10:30,813 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma.tmp_save
+2023-02-25 15:10:30,938 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma.tmp
+2023-02-25 15:10:30,954 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma_GV.tmp_save
+2023-02-25 15:10:31,048 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma_GV.tmp
+2023-02-25 15:10:31,079 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_it.c_save
+2023-02-25 15:10:31,251 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_it.c
+2023-02-25 15:10:31,266 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_it.h_save
+2023-02-25 15:10:31,423 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_it.h
+2023-02-25 15:10:31,579 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_hal_msp.c_save
+2023-02-25 15:10:31,829 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_hal_msp.c
+2023-02-25 15:10:31,844 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\system.tmp_save
+2023-02-25 15:10:31,954 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\system.tmp
+2023-02-25 15:10:32,001 [INFO] CodeEngine:303 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_hal_conf.h_save
+2023-02-25 15:10:32,188 [INFO] CodeEngine:327 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_hal_conf.h
+2023-02-25 15:10:32,282 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\main.h_save
+2023-02-25 15:10:32,469 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\main.h
+2023-02-25 15:10:32,501 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\main.c_save
+2023-02-25 15:10:32,766 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\main.c
+2023-02-25 15:10:34,063 [INFO] ProjectBuilder:2919 - Time for Copy HAL[1] : 437mS.
+2023-02-25 15:10:34,079 [INFO] ProjectBuilder:4183 - Project Generator version: 3.18.0-B7
+2023-02-25 15:10:34,626 [INFO] ConfigFileManager:1396 - The Die is : DIE457
+2023-02-25 15:10:34,657 [INFO] ApiDbMcu:505 - Load IP Config File for FATFS
+2023-02-25 15:10:34,657 [INFO] ApiDbMcu:505 - Load IP Config File for FREERTOS
+2023-02-25 15:10:37,657 [INFO] ProjectBuilder:4351 - Time for Generating toolchain IDE Files: 3578mS.
+2023-02-25 15:10:37,673 [INFO] ProjectBuilder:2790 - Time for Copy CMSIS : 16mS.
+2023-02-25 15:10:37,673 [INFO] ProjectBuilder:2790 - Time for Copy CMSIS : 0mS.
+2023-02-25 15:22:19,549 [INFO] MainUpdater:2800 - connection check result : 10
+2023-02-25 15:22:19,549 [INFO] MainUpdater:2800 - connection check result : 10
+2023-02-25 15:22:19,564 [INFO] MicroXplorer:451 - Change Database Path : 
+2023-02-25 15:22:19,564 [INFO] MicroXplorer:481 - Change Database Version : DB.6.0.70
+2023-02-25 15:22:19,596 [WARN] ThirdParty:845 - waiting for thirdparty lock release [close project]
+2023-02-25 15:22:19,596 [INFO] ThirdParty:847 - entering critical section [close project]
+2023-02-25 15:22:19,596 [INFO] ThirdParty:857 - exiting critical section [close project]
+2023-02-25 15:22:19,596 [INFO] PinOutPanel:1477 - setPackage(No Configuration,No Configuration)
+2023-02-25 15:22:19,611 [INFO] UtilMem:74 - Begin LoadConfig() Used Memory: 617712256 Bytes (886046720)
+2023-02-25 15:22:19,611 [INFO] MicroXplorer:451 - Change Database Path : 
+2023-02-25 15:22:19,611 [INFO] MicroXplorer:481 - Change Database Version : DB.6.0.70
+2023-02-25 15:22:19,611 [INFO] OpenFileManager:307 - Change cursor
+2023-02-25 15:22:19,643 [INFO] RulesReader:61 - Compatibility file has been processed (283 Rules)
+2023-02-25 15:22:19,643 [INFO] Mcu:1925 - Initializing MCU STM32L010F4Px STM32L010F4Px STM32L010F4P6
+2023-02-25 15:22:20,080 [INFO] Context:654 - Trying to add GPIOservice into a context  which must be forbidden
+2023-02-25 15:22:20,361 [INFO] RtosManager:489 - Registered RTOS mode: class=CMSIS, group=RTOS, mode=CMSIS_V1, owner=FREERTOS
+2023-02-25 15:22:20,361 [INFO] RtosManager:489 - Registered RTOS mode: class=CMSIS, group=RTOS2, mode=CMSIS_V2, owner=FREERTOS
+2023-02-25 15:22:20,361 [INFO] RtosManager:489 - Registered RTOS mode: class=RTOS, group=Core, mode=CMSIS_V1, owner=FREERTOS
+2023-02-25 15:22:20,361 [INFO] RtosManager:489 - Registered RTOS mode: class=RTOS, group=Core, mode=CMSIS_V2, owner=FREERTOS
+2023-02-25 15:22:20,361 [WARN] ModelIntegratedComponent:185 - Missing modes for component STMicroelectronics:FreeRTOS:0.0.1:STMicroelectronics:RTOS:FreeRTOS:Core:::10.2.0:
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,377 [WARN] ModelIntegratedComponent:64 - No mode defined for component null
+2023-02-25 15:22:20,489 [INFO] ThirdPartyModel:294 - Start build external matchings
+2023-02-25 15:22:21,002 [INFO] ThirdPartyModel:310 - End build external matchings
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (Instance) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (Request) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (Direction) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (PeriphInc) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (MemInc) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (PeriphDataAlignment) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (MemDataAlignment) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (Mode) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,034 [INFO] ImportTextPane:193 - (OptionalMessage_ERROR) IP (DMA) : Parameter (Priority) has Id (USART2_RX) currently not set
+2023-02-25 15:22:21,049 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:21,159 [INFO] UtilMem:74 - End LoadConfig() Used Memory: 661685600 Bytes (886046720)
+2023-02-25 15:22:21,190 [WARN] ThirdParty:807 - waiting for thirdparty lock release [change project]
+2023-02-25 15:22:21,190 [INFO] ThirdParty:809 - entering critical section [change project]
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-ISPU 1.1.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :RoweBots I-CUBE-UNISONRTOS 5.5.0-4
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-GNSS1 6.0.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics USB_HOST 2.0.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-F4 1.1.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics LIBJPEG 8.0.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics USB_DEVICE 3.0.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AI 8.0.0
+2023-02-25 15:22:21,190 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-TOUCHGFX 4.21.1
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-F7 1.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-MEMS1 9.4.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics USB_DEVICE 2.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AI 7.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-ALGOBUILD 1.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-BLE1 6.2.4
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-L5 1.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics FreeRTOS 0.0.1
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :emotas I-CUBE-CANOPEN 1.1.3
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-G0 1.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-SUBG2 5.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-NFC4 3.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics STM32_WPAN 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics lwIP 2.0.3
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics USB_HOST 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics PDM2PCM 3.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics FP-ATR-ASTRA1 1.1.1
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics PDM2PCM 3.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-DISPLAY 3.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-BLEMGR 1.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-G4 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics FP-ATR-SIGFOX1 3.2.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :wolfSSL I-CUBE-wolfSSL 5.5.4
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-L4 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics HAL Drivers 0.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics MBEDTLS 2.16.2
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics MBEDTLS 2.14.1
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-NFC7 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-WL 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-EEPRMA1 4.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :portGmbH I-Cube-SoM-uGOAL 1.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-ALS 1.0.1
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-MEMS1 9.5.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics ThreadX 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-WB 1.1.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics USB_DEVICE 1.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :SEGGER I-CUBE-embOS 1.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics ThreadX 0.0.2
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics lwIP 2.1.2
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-SFXS2LP1 4.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-BLE2 3.3.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-DISPLAY 2.2.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-TOF1 3.2.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics PDM2PCM 3.2.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:999 - CMSIS Pack Vendor :STMicroelectronics X-CUBE-AZRTOS-H7 3.0.0
+2023-02-25 15:22:21,205 [INFO] ThirdParty:815 - exiting critical section [change project]
+2023-02-25 15:22:21,315 [INFO] PinOutPanel:1477 - setPackage(No Configuration,No Configuration)
+2023-02-25 15:22:21,330 [INFO] PinOutPanel:1477 - setPackage(STM32L010F4Px,TSSOP20)
+2023-02-25 15:22:21,659 [INFO] UtilMem:74 - Before build in PCC Used Memory: 735079544 Bytes (886046720)
+2023-02-25 15:22:22,065 [INFO] UtilMem:74 - After build in PCC Used Memory: 557105656 Bytes (886046720)
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [INFO] IPUIPlugin:79 - create IPUIPlugin
+2023-02-25 15:22:22,080 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:22,112 [INFO] CADModel:164 - CPN selected for project levelSTM32L010F4P6
+2023-02-25 15:22:22,112 [INFO] CADModel:113 - Register for checkConnection events
+2023-02-25 15:22:22,252 [INFO] OpenFileManager:327 - Restore cursor
+2023-02-25 15:22:22,518 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:22,518 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:41,331 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:41,346 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:46,675 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:46,675 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:46,722 [INFO] NvicIntPanel:100 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2023-02-25 15:22:46,738 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:52,176 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 573904216 Bytes (886046720)
+2023-02-25 15:22:53,098 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 581444728 Bytes (886046720)
+2023-02-25 15:22:54,129 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 602416248 Bytes (886046720)
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SPI
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2023-02-25 15:22:54,317 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: DMA
+2023-02-25 15:22:54,317 [INFO] CodeGenerator:692 - code generatio: config db path: C:\ST\STM32CubeIDE_1.11.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.7.0.202211181646\\db\
+2023-02-25 15:22:54,333 [WARN] IP:2112 - AutoBaudRateEnableParam not found: check if there is a RefParameter without a condition.
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : hdmavalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:302 - 	 sub Args: 
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Instancevalue: DMA1_Channel3
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Instancevalue: DMA1_Channel3
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Initvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:302 - 	 sub Args: 
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Requestvalue: DMA_REQUEST_4
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Requestvalue: DMA_REQUEST_4
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Modevalue: DMA_CIRCULAR
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Modevalue: DMA_CIRCULAR
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Lockvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Lockvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Statevalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Statevalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : Parentvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : Parentvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : XferCpltCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : XferCpltCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : XferHalfCpltCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : XferHalfCpltCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : XferErrorCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : XferErrorCallbackvalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:300 - Argument : ErrorCodevalue: null
+2023-02-25 15:22:54,333 [INFO] Argument:310 - Argument : ErrorCodevalue: null
+2023-02-25 15:22:54,536 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\license.tmp_save
+2023-02-25 15:22:54,723 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\license.tmp
+2023-02-25 15:22:54,801 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\gpio.tmp_save
+2023-02-25 15:22:54,895 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\gpio.tmp
+2023-02-25 15:22:55,114 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma.tmp_save
+2023-02-25 15:22:55,208 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma.tmp
+2023-02-25 15:22:55,223 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma_GV.tmp_save
+2023-02-25 15:22:55,286 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\dma_GV.tmp
+2023-02-25 15:22:55,301 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_it.c_save
+2023-02-25 15:22:55,629 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_it.c
+2023-02-25 15:22:55,645 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_it.h_save
+2023-02-25 15:22:55,739 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_it.h
+2023-02-25 15:22:55,848 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_hal_msp.c_save
+2023-02-25 15:22:56,114 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\stm32l0xx_hal_msp.c
+2023-02-25 15:22:56,114 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\system.tmp_save
+2023-02-25 15:22:56,223 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\MXTmpFiles\system.tmp
+2023-02-25 15:22:56,239 [INFO] CodeEngine:303 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_hal_conf.h_save
+2023-02-25 15:22:56,379 [INFO] CodeEngine:327 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\stm32l0xx_hal_conf.h
+2023-02-25 15:22:56,426 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\main.h_save
+2023-02-25 15:22:56,536 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Inc\main.h
+2023-02-25 15:22:56,551 [INFO] CodeEngine:247 - oldGeneratedFile, C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\main.c_save
+2023-02-25 15:22:56,708 [INFO] CodeEngine:271 - Generated code: C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\Blind_Spot_STM32CubeIDE\Core\Src\main.c
+2023-02-25 15:22:57,629 [INFO] ProjectBuilder:2919 - Time for Copy HAL[1] : 296mS.
+2023-02-25 15:22:57,629 [INFO] ProjectBuilder:4183 - Project Generator version: 3.18.0-B7
+2023-02-25 15:22:58,020 [INFO] ConfigFileManager:1396 - The Die is : DIE457
+2023-02-25 15:22:58,020 [INFO] ApiDbMcu:505 - Load IP Config File for FATFS
+2023-02-25 15:22:58,020 [INFO] ApiDbMcu:505 - Load IP Config File for FREERTOS
+2023-02-25 15:22:59,661 [INFO] ProjectBuilder:4351 - Time for Generating toolchain IDE Files: 2032mS.
+2023-02-25 15:22:59,661 [INFO] ProjectBuilder:2790 - Time for Copy CMSIS : 0mS.
+2023-02-25 15:22:59,661 [INFO] ProjectBuilder:2790 - Time for Copy CMSIS : 0mS.

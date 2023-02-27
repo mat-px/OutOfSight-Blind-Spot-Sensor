@@ -59,7 +59,7 @@ C Model Exception: C Model Status [Element main.c does not exist.]
 !SUBENTRY 1 org.eclipse.cdt.core 4 969 2023-02-20 17:57:07.939
 !MESSAGE Element main.c does not exist.
 
-!ENTRY org.eclipse.cdt.ui 4 0 2023-02-22 17:08:19.184
+!ENTRY org.eclipse.cdt.ui 4 0 2023-02-27 12:00:59.998
 !MESSAGE Error in CDT UI during reconcile
 !STACK 1
 C Model Exception: C Model Status [Element main.c does not exist.]
@@ -77,23 +77,5 @@ C Model Exception: C Model Status [Element main.c does not exist.]
 	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
 	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:346)
 	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
-!SUBENTRY 1 org.eclipse.cdt.core 4 969 2023-02-22 17:08:19.184
+!SUBENTRY 1 org.eclipse.cdt.core 4 969 2023-02-27 12:00:59.998
 !MESSAGE Element main.c does not exist.
-!SESSION 2023-02-25 10:35:44.206 -----------------------------------------------
-eclipse.buildId=Version 1.11.0
-java.version=11.0.16
-java.vendor=Eclipse Adoptium
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
-Command-line arguments:  -os win32 -ws win32 -arch x86_64
-
-!ENTRY org.eclipse.core.resources 2 10035 2023-02-25 10:35:55.897
-!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
-
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-02-25 10:36:10.483
-!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
-
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-02-25 10:36:10.608
-!MESSAGE Log4j initialized with config file C:\Users\madpr\OneDrive\Documents\OutOfSight\OutOfSight-Blind-Spot-Sensor\.metadata\.log4j.xml
-
-!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-02-25 10:36:25.953
-!MESSAGE Started RMI Server, listening on port 41337

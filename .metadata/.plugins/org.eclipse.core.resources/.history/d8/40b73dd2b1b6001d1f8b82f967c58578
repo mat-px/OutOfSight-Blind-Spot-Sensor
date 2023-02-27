@@ -1,0 +1,385 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+#define RX_BUFFER_SIZE 9
+
+SPI_HandleTypeDef hspi1;
+UART_HandleTypeDef huart2;
+
+volatile uint32_t led = 0;
+uint8_t rx_buffer[RX_BUFFER_SIZE] = {0}; // Receive buffer
+uint8_t store[1]; // Receive buffer
+uint8_t tmp_data;
+char char_array[9];
+volatile uint8_t transmit = 1;
+
+
+//----------Beginning of LiDAR commands----------
+//uint8_t getVersionCMD[] = {0x5A, 0x04, 0x01, 0x00}; //Get version (0x01)
+
+uint8_t softResetCMD[] = {0x5A, 0x04, 0x02, 0x00}; //Soft reset (0x02)
+
+uint8_t sampleFreq0HzCMD[] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; //Sample frequency 0Hz (0x03)
+//uint8_t sampleFreq10HzCMD[] = {0x5A, 0x06, 0x03, 0x0A, 0x00, 0x00}; //Sample frequency 10Hz (0x03)
+//uint8_t sampleFreq250HzCMD[] = {0x5A, 0x06, 0x03, 0xFA, 0x00, 0x00}; //Sample frequency 250Hz (0x03)
+uint8_t sampleTriggerCMD[] = {0x5A, 0x04, 0x04, 0x00}; //Sample trigger (0x04)
+uint8_t outForm9B_cmCMD[] = {0x5A, 0x05, 0x05, 0x01, 0x00}; //Output format 9-byte/cm (0x05)
+//uint8_t outForm8B_cmCMD[] = {0x5A, 0x05, 0x05, 0x09, 0x00}; //Output format 8-byte/cm (0x05)
+//uint8_t baud9600CMD[] = {0x5A, 0x08, 0x06, 0x80, 0x25, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud19200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x4B, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud38400CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x96, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud57600CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xE1, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t baud115200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xC2, 0x01, 0x00, 0x00}; //Baud rate 115200 (0x06)
+//uint8_t outputEnableCMD[] = {0x5A, 0x05, 0x07, 0x01, 0x00}; //Output enable (0x07)
+//uint8_t outputDisableCMD[] = {0x5A, 0x05, 0x07, 0x00, 0x00}; //Output disable (0x07)
+//uint8_t checksumEnableCMD[] = {0x5A, 0x05, 0x08, 0x01, 0x00}; //Enable checksum comparison (0x08)
+//uint8_t checksumDisableCMD[] = {0x5A, 0x05, 0x08, 0x00, 0x67}; //Disable checksum comparison (0x08)
+//uint8_t resDefSetCMD[] = {0x5A, 0x04, 0x10, 0x00}; //Restore default settings (0x10)
+//uint8_t saveSettingsCMD[] = {0x5A, 0x04, 0x11, 0x00}; //Save current settings (0x11)
+//uint8_t barcodeCMD[] = {0x5A, 0x04, 0x12, 0x00}; //Output product barcode (0x12)
+//uint8_t getFullVersionCMD[] = {0x5A, 0x04, 0x14, 0x00}; //Get full version (0x14)
+
+uint8_t powerSavingEN1HzCMD[] = {0x5A, 0x06, 0x35, 0x01, 0x00, 0x00}; //Enable power saving mode and measure at 1Hz (0x35)
+uint8_t powerSavingEN10HzCMD[] = {0x5A, 0x06, 0x35, 0x0A, 0x00, 0x00}; //Enable power saving mode and measure at 10Hz (0x35)
+uint8_t ultraLowPwrModeEnableCMD[] = {0x5A, 0x05, 0x58, 0x01, 0x00}; //Enable ultra low power mode (0x58)
+uint8_t ultraLowPwrModeDisableCMD[] = {0x5A, 0x05, 0x58, 0x00, 0x00}; //Disable ultra low power mode - Send 5 times repeatedly (0x58)
+//----------End of LiDAR commands----------
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_SPI1_Init(void);
+static void MX_USART2_UART_Init(void);
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
+void send(uint8_t* data, uint16_t len);
+void receive(uint8_t* data, uint16_t len);
+void lidar_init();
+void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array);
+
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_SPI1_Init();
+  MX_USART2_UART_Init();
+
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
+
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+
+  memset(rx_buffer, 0, RX_BUFFER_SIZE);
+  lidar_init();
+
+  HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
+
+  while (1)
+  {
+	  if(transmit != 0) {
+		  HAL_UART_Transmit(&huart2, (uint8_t *)sampleTriggerCMD, sizeof(sampleTriggerCMD), 100);
+		  transmit = 0;
+		  HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
+
+	  }
+//
+//	  HAL_UART_Transmit(&huart2, (uint8_t *)sampleTriggerCMD, sizeof(sampleTriggerCMD), 100);
+//	  HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
+//	  HAL_Delay(1000);
+
+	  char msg[] = "\n\r\n\rSent: ";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+	  hex_to_char(sampleTriggerCMD, sizeof(sampleTriggerCMD), char_array);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), HAL_MAX_DELAY);
+
+//	  char msg0[] = "\n\rReceived: ";
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg0, strlen(msg0), HAL_MAX_DELAY);
+//	  hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
+
+//  	  if(rx_buffer[0] == 0x5A){
+//  			  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+//  			  HAL_Delay(1000);
+//  			  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+//  			__HAL_UART_CLEAR_FLAG(&huart2, UART_FLAG_RXNE);
+//  	  }
+
+//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+//	  HAL_Delay(1000);
+//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+  }
+}
+
+void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array)
+{
+    for (int i = 0; i < hex_len; i++)
+    {
+        char_array[2 * i]     = hex_array[i] >> 4;
+        char_array[2 * i + 1] = hex_array[i] & 0x0f;
+        char_array[2 * i]     += char_array[2 * i] > 9 ? 'A' - 10 : '0';
+        char_array[2 * i + 1] += char_array[2 * i + 1] > 9 ? 'A' - 10 : '0';
+    }
+    char_array[2 * hex_len] = '\0';
+}
+
+
+void lidar_init(){
+	//Send soft reset command
+	HAL_UART_Transmit(&huart2, softResetCMD, sizeof(softResetCMD), 100);
+	HAL_Delay(500);
+
+	//Send sample at 0Hz command
+	HAL_UART_Transmit(&huart2, sampleFreq0HzCMD, sizeof(sampleFreq0HzCMD), 100);
+	HAL_Delay(500);
+
+	//Send output format 9-byte/cm
+	HAL_UART_Transmit(&huart2, outForm9B_cmCMD, sizeof(outForm9B_cmCMD), 100);
+	HAL_Delay(500);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if(huart->Instance == huart2.Instance){
+		char msg[] = "\n\rReceived: ";
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+		hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
+		HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
+		HAL_Delay(100);
+		transmit = 1;
+	}
+
+
+//	if(rx_buffer_index < RX_BUFFER_SIZE - 1) {
+//		rx_buffer[rx_buffer_index++] = huart->Instance->RDR;
+//		HAL_UART_Receive_IT(&huart2, &rx_buffer[rx_buffer_index], 1);
+//	} else {
+//		char msg[] = "\n\rReceived: ";
+//		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+//		hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
+//		HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
+//	}
+
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+	char msg[] = "Sent\r\n";
+	if(huart->Instance == huart2.Instance){
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+	}
+}
+
+void send(uint8_t* data, uint16_t len){
+	HAL_UART_Transmit(&huart2, data, len, 100);
+//	HAL_UART_Transmit_IT(&huart2, data, len);
+}
+
+void receive(uint8_t* data, uint16_t len){
+	HAL_UART_Receive(&huart2, data, len, 5000);
+//  HAL_UART_Receive_IT(&huart2, data, len);
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.MSIState = RCC_MSI_ON;
+  RCC_OscInitStruct.MSICalibrationValue = 0;
+  RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_5;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+  PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, MISC_GPIO3_Pin|MISC_GPIO4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, ACCEL_SPI1_CS_Pin|GPIO_PIN_4|GPIO_PIN_13|LED_OUT_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(MISC_GPIO2_GPIO_Port, MISC_GPIO2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : MISC_GPIO3_Pin MISC_GPIO4_Pin */
+  GPIO_InitStruct.Pin = MISC_GPIO3_Pin|MISC_GPIO4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : ON_OFF_MODE_Pin ACCEL_INT2_Pin ACCEL_INT1_Pin */
+  GPIO_InitStruct.Pin = ON_OFF_MODE_Pin|ACCEL_INT2_Pin|ACCEL_INT1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : ACCEL_SPI1_CS_Pin PA4 PA13 */
+  GPIO_InitStruct.Pin = ACCEL_SPI1_CS_Pin|GPIO_PIN_4|GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : MISC_GPIO2_Pin */
+  GPIO_InitStruct.Pin = MISC_GPIO2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(MISC_GPIO2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LED_OUT_Pin */
+  GPIO_InitStruct.Pin = LED_OUT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED_OUT_GPIO_Port, &GPIO_InitStruct);
+
+}
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */
