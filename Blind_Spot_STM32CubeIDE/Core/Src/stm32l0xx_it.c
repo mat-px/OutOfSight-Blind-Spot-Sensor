@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -41,7 +41,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern uint8_t rx_buffer[9]; // Receive buffer
+volatile uint8_t rx_index = 0;
+volatile uint8_t flag_uart_data_received = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -155,5 +157,33 @@ void USART2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+//	if (USART2->ISR & USART_ISR_RXNE) {
+//	        uint8_t data = USART2->RDR;
+//	        flag_uart_data_received = 1;
+//	        if (rx_index < 9) {
+//	            rx_buffer[rx_index] = data;
+//	            rx_index++;
+//	        }
+//	        if (rx_index >= 9) {
+//	            rx_index = 0;
+//	        }
+//	    }
+
+// Code to check flags in the IRQ Interrupt
+//	char am_I_here[] = "USART2_IRQHandler triggered";
+//	HAL_UART_Transmit(&huart2, (uint8_t*)am_I_here, strlen(am_I_here), HAL_MAX_DELAY);
+//	HAL_Delay(1000);
+//	if(USART_ISR_RXNE){
+//		char msg[] = "USART_ISR_RXNE";
+//		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+//	}
+//	if(USART2->ISR){
+//		char msg0[] = "USART2->ISR";
+//		HAL_UART_Transmit(&huart2, (uint8_t*)msg0, strlen(msg0), HAL_MAX_DELAY);
+//	}
+//	if (huart2.gState == HAL_UART_STATE_READY) {
+//	  char msg3[] = "USART_ISR_RXNE";
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg3, strlen(msg3), HAL_MAX_DELAY);
+//	}
 
 /* USER CODE END 1 */

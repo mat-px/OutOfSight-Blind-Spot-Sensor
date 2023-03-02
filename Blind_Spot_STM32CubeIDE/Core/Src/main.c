@@ -19,183 +19,170 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#define RX_BUFFER_SIZE 9
-#define TEST_SIZE 100
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
+/* USER CODE END Includes */
 
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
+
 UART_HandleTypeDef huart2;
 
-volatile uint32_t led = 0;
-uint8_t rx_buffer[RX_BUFFER_SIZE] = {0}; // Receive buffer
-uint8_t rx_buffer0[RX_BUFFER_SIZE-1] = {0}; // Receive buffer
-uint8_t TEST_BUFFER[TEST_SIZE] = {0}; // Receive buffer
-
-uint8_t store[1]; // Receive buffer
-uint8_t tmp_data;
-char char_array[9];
-volatile uint8_t transmit = 1;
-
+/* USER CODE BEGIN PV */
+char hex_str[9];
+uint8_t rx_buffer[9] = {0}; // Receive buffer
+const int RX_BUFFER_SIZE = 9;
+extern uint16_t rx_index;
+extern uint8_t flag_uart_data_received;
+uint8_t start_byte_detected = 0;
 
 //----------Beginning of LiDAR commands----------
 //uint8_t getVersionCMD[] = {0x5A, 0x04, 0x01, 0x00}; //Get version (0x01)
-
 uint8_t softResetCMD[] = {0x5A, 0x04, 0x02, 0x00}; //Soft reset (0x02)
-
 uint8_t sampleFreq0HzCMD[] = {0x5A, 0x06, 0x03, 0x00, 0x00, 0x00}; //Sample frequency 0Hz (0x03)
-//uint8_t sampleFreq10HzCMD[] = {0x5A, 0x06, 0x03, 0x0A, 0x00, 0x00}; //Sample frequency 10Hz (0x03)
+uint8_t sampleFreq10HzCMD[] = {0x5A, 0x06, 0x03, 0x0A, 0x00, 0x00}; //Sample frequency 10Hz (0x03)
 //uint8_t sampleFreq250HzCMD[] = {0x5A, 0x06, 0x03, 0xFA, 0x00, 0x00}; //Sample frequency 250Hz (0x03)
 uint8_t sampleTriggerCMD[] = {0x5A, 0x04, 0x04, 0x00}; //Sample trigger (0x04)
 uint8_t outForm9B_cmCMD[] = {0x5A, 0x05, 0x05, 0x01, 0x00}; //Output format 9-byte/cm (0x05)
-//uint8_t outForm8B_cmCMD[] = {0x5A, 0x05, 0x05, 0x09, 0x00}; //Output format 8-byte/cm (0x05)
-//uint8_t baud9600CMD[] = {0x5A, 0x08, 0x06, 0x80, 0x25, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
+uint8_t outForm8B_cmCMD[] = {0x5A, 0x05, 0x05, 0x09, 0x00}; //Output format 8-byte/cm (0x05)
+uint8_t baud9600CMD[] = {0x5A, 0x08, 0x06, 0x80, 0x25, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
 //uint8_t baud19200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x4B, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
 //uint8_t baud38400CMD[] = {0x5A, 0x08, 0x06, 0x00, 0x96, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
 //uint8_t baud57600CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xE1, 0x00, 0x00, 0x00}; //Baud rate 115200 (0x06)
-//uint8_t baud115200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xC2, 0x01, 0x00, 0x00}; //Baud rate 115200 (0x06)
+uint8_t baud115200CMD[] = {0x5A, 0x08, 0x06, 0x00, 0xC2, 0x01, 0x00, 0x00}; //Baud rate 115200 (0x06)
 //uint8_t outputEnableCMD[] = {0x5A, 0x05, 0x07, 0x01, 0x00}; //Output enable (0x07)
 //uint8_t outputDisableCMD[] = {0x5A, 0x05, 0x07, 0x00, 0x00}; //Output disable (0x07)
 //uint8_t checksumEnableCMD[] = {0x5A, 0x05, 0x08, 0x01, 0x00}; //Enable checksum comparison (0x08)
 //uint8_t checksumDisableCMD[] = {0x5A, 0x05, 0x08, 0x00, 0x67}; //Disable checksum comparison (0x08)
 //uint8_t resDefSetCMD[] = {0x5A, 0x04, 0x10, 0x00}; //Restore default settings (0x10)
-//uint8_t saveSettingsCMD[] = {0x5A, 0x04, 0x11, 0x00}; //Save current settings (0x11)
+uint8_t saveSettingsCMD[] = {0x5A, 0x04, 0x11, 0x00}; //Save current settings (0x11)
 //uint8_t barcodeCMD[] = {0x5A, 0x04, 0x12, 0x00}; //Output product barcode (0x12)
 //uint8_t getFullVersionCMD[] = {0x5A, 0x04, 0x14, 0x00}; //Get full version (0x14)
-
 uint8_t powerSavingEN1HzCMD[] = {0x5A, 0x06, 0x35, 0x01, 0x00, 0x00}; //Enable power saving mode and measure at 1Hz (0x35)
 uint8_t powerSavingEN10HzCMD[] = {0x5A, 0x06, 0x35, 0x0A, 0x00, 0x00}; //Enable power saving mode and measure at 10Hz (0x35)
 uint8_t ultraLowPwrModeEnableCMD[] = {0x5A, 0x05, 0x58, 0x01, 0x00}; //Enable ultra low power mode (0x58)
 uint8_t ultraLowPwrModeDisableCMD[] = {0x5A, 0x05, 0x58, 0x00, 0x00}; //Disable ultra low power mode - Send 5 times repeatedly (0x58)
 //----------End of LiDAR commands----------
 
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
-
+/* USER CODE BEGIN PFP */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
-void send(uint8_t* data, uint16_t len);
-void receive(uint8_t* data, uint16_t len);
 void lidar_init();
-void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array);
+void data_to_hex_str(uint8_t *data, uint8_t data_len, char *hex_str);
+/* USER CODE END PFP */
 
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_USART2_UART_Init();
+  /* USER CODE BEGIN 2 */
 
   HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART2_IRQn);
-
-  __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+   __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
 
   lidar_init();
+  HAL_Delay(1000);
+  /* USER CODE END 2 */
 
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  memset(TEST_BUFFER, 0, TEST_SIZE);
-	  HAL_UART_Transmit(&huart2, (uint8_t *)sampleTriggerCMD, sizeof(sampleTriggerCMD), 1000);
-//	  for (int i = 0; i < 100; i++){
-//		  HAL_UART_Receive(&huart2, &rx_buffer[0], 1, 100);
-//		  if (rx_buffer[0] == 0x5A)
-//		          break;
-//	  }
-	  for(int i = 0; i < TEST_SIZE; i++){
-		  HAL_UART_Receive(&huart2, &TEST_BUFFER[i], 1, 100);
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+	if(start_byte_detected == 0){
+//		  memset(rx_buffer, 0, RX_BUFFER_SIZE); // Reset the rx_buffer with 0s
+		  HAL_UART_Receive(&huart2, (uint8_t*)&rx_buffer[0], 1, 1000); // Receive a single byte in blocking
+
+		  char msg[] = "\n\rChecking byte: ";
+		  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+
+		  // Send the byte to serial terminal
+		  HAL_UART_Transmit(&huart2, (uint8_t*)&rx_buffer[0], sizeof(rx_buffer[0]), HAL_MAX_DELAY);
+
+		  // Send the entire rx_buffer to serial terminal
+		  data_to_hex_str(rx_buffer, sizeof(rx_buffer), hex_str);
+		  HAL_UART_Transmit(&huart2, (uint8_t*)hex_str, 2 * RX_BUFFER_SIZE, 100);
+
+		  // Checks if the byte received is 0x59
+		  if(rx_buffer[0] == 0x59){
+				  // Turn on LED for a second
+				  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
+				  HAL_Delay(1000);
+				  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
+				  start_byte_detected = 1; // Set the flag for start byte being found
+			  }
+	  } else {
+		  // Receive the remaining 8 bytes
+		  for(int i = 1; i < RX_BUFFER_SIZE; i++){
+				  HAL_UART_Receive(&huart2, &rx_buffer[i], 1, 100);
+			  }
+
+		  // Send the rx_buffer to serial terminal
+		  char msg0[] = "\n\rReceived: ";
+		  HAL_UART_Transmit(&huart2, (uint8_t*)msg0, strlen(msg0), HAL_MAX_DELAY);
+		  data_to_hex_str(rx_buffer, RX_BUFFER_SIZE, hex_str);
+		  HAL_UART_Transmit(&huart2, (uint8_t*)hex_str, strlen(hex_str), 100);
+		  HAL_Delay(500);
+		  start_byte_detected = 0;
 	  }
-
-
-	  HAL_Delay(100);
-
-	  char msg[] = "\n\r\n\rSent: ";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-	  hex_to_char(sampleTriggerCMD, sizeof(sampleTriggerCMD), char_array);
-	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), HAL_MAX_DELAY);
-
-	  char msg0[] = "\n\rReceived: ";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)msg0, strlen(msg0), HAL_MAX_DELAY);
-	  hex_to_char(TEST_BUFFER, TEST_SIZE, char_array);
-	  HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
-
-//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_SET);
-//	  HAL_Delay(1000);
-//	  HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, GPIO_PIN_RESET);
   }
-}
-
-void hex_to_char(uint8_t *hex_array, uint8_t hex_len, char *char_array)
-{
-    for (int i = 0; i < hex_len; i++)
-    {
-        char_array[2 * i]     = hex_array[i] >> 4;
-        char_array[2 * i + 1] = hex_array[i] & 0x0f;
-        char_array[2 * i]     += char_array[2 * i] > 9 ? 'A' - 10 : '0';
-        char_array[2 * i + 1] += char_array[2 * i + 1] > 9 ? 'A' - 10 : '0';
-    }
-    char_array[2 * hex_len] = '\0';
-}
-
-
-void lidar_init(){
-	//Send soft reset command
-	HAL_UART_Transmit(&huart2, softResetCMD, sizeof(softResetCMD), 100);
-	HAL_Delay(500);
-
-	//Send sample at 0Hz command
-	HAL_UART_Transmit(&huart2, sampleFreq0HzCMD, sizeof(sampleFreq0HzCMD), 100);
-	HAL_Delay(500);
-
-	//Send output format 9-byte/cm
-	HAL_UART_Transmit(&huart2, outForm9B_cmCMD, sizeof(outForm9B_cmCMD), 100);
-	HAL_Delay(500);
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	if(huart->Instance == huart2.Instance){
-
-//
-//		hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
-//		HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
-//		char msg[] = "\n\rRec____";
-//		HAL_UART_Transmit(&huart2, (uint8_t*)msg, 9, HAL_MAX_DELAY);
-//		HAL_Delay(100);
-//		HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
-	}
-
-
-//	if(rx_buffer_index < RX_BUFFER_SIZE - 1) {
-//		rx_buffer[rx_buffer_index++] = huart->Instance->RDR;
-//		HAL_UART_Receive_IT(&huart2, &rx_buffer[rx_buffer_index], 1);
-//	} else {
-//		char msg[] = "\n\rReceived: ";
-//		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-//		hex_to_char(rx_buffer, RX_BUFFER_SIZE, char_array);
-//		HAL_UART_Transmit(&huart2, (uint8_t*)char_array, strlen(char_array), 100);
-//	}
-
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-	HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
-	char msg[] = "Sent___\r\n";
-	if(huart->Instance == huart2.Instance){
-		HAL_UART_Transmit(&huart2, (uint8_t*)msg, 9, HAL_MAX_DELAY);
-	}
-
-}
-
-void send(uint8_t* data, uint16_t len){
-	HAL_UART_Transmit(&huart2, data, len, 100);
-//	HAL_UART_Transmit_IT(&huart2, data, len);
-}
-
-void receive(uint8_t* data, uint16_t len){
-	HAL_UART_Receive(&huart2, data, len, 5000);
-//  HAL_UART_Receive_IT(&huart2, data, len);
+  /* USER CODE END 3 */
 }
 
 /**
@@ -253,6 +240,14 @@ void SystemClock_Config(void)
   */
 static void MX_SPI1_Init(void)
 {
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
   /* SPI1 parameter configuration*/
   hspi1.Instance = SPI1;
   hspi1.Init.Mode = SPI_MODE_MASTER;
@@ -270,6 +265,10 @@ static void MX_SPI1_Init(void)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
 }
 
 /**
@@ -279,8 +278,16 @@ static void MX_SPI1_Init(void)
   */
 static void MX_USART2_UART_Init(void)
 {
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -293,6 +300,10 @@ static void MX_USART2_UART_Init(void)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
 }
 
 /**
@@ -313,7 +324,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, MISC_GPIO3_Pin|MISC_GPIO4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, ACCEL_SPI1_CS_Pin|GPIO_PIN_4|GPIO_PIN_13|LED_OUT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, ACCEL_SPI1_CS_Pin|MISC_GPIO1_Pin|LED_OUT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(MISC_GPIO2_GPIO_Port, MISC_GPIO2_Pin, GPIO_PIN_RESET);
@@ -331,8 +342,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : ACCEL_SPI1_CS_Pin PA4 PA13 */
-  GPIO_InitStruct.Pin = ACCEL_SPI1_CS_Pin|GPIO_PIN_4|GPIO_PIN_13;
+  /*Configure GPIO pins : ACCEL_SPI1_CS_Pin MISC_GPIO1_Pin */
+  GPIO_InitStruct.Pin = ACCEL_SPI1_CS_Pin|MISC_GPIO1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -353,6 +364,68 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(LED_OUT_GPIO_Port, &GPIO_InitStruct);
 
 }
+
+/* USER CODE BEGIN 4 */
+void data_to_hex_str(uint8_t *data, uint8_t data_len, char *hex_str)
+{
+    for (int i = 0; i < data_len; i++)
+    {
+        hex_str[2 * i]     = data[i] >> 4;
+        hex_str[2 * i + 1] = data[i] & 0x0f;
+        hex_str[2 * i]     += hex_str[2 * i] > 9 ? 'A' - 10 : '0';
+        hex_str[2 * i + 1] += hex_str[2 * i + 1] > 9 ? 'A' - 10 : '0';
+    }
+    hex_str[2 * data_len] = '\0';
+}
+
+void lidar_init(){
+	//Send soft reset command
+	HAL_Delay(10000);
+	HAL_UART_Transmit(&huart2, softResetCMD, sizeof(softResetCMD), 100);
+	HAL_UART_Receive(&huart2, rx_buffer, 5, 3000);
+
+	// Send message
+	char msg1[] = "\n\rChecking return: ";
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg1, strlen(msg1), HAL_MAX_DELAY);
+
+	// Send rx_buffer
+	HAL_UART_Transmit(&huart2, (uint8_t*)rx_buffer, sizeof(rx_buffer), 100);
+	HAL_Delay(500);
+
+	// Send a 1
+	HAL_UART_Transmit(&huart2, (uint8_t*)"1", 1, HAL_MAX_DELAY);
+
+	HAL_UART_Transmit(&huart2, baud9600CMD, sizeof(baud9600CMD), 100);
+	HAL_Delay(500);
+
+	//Send sample at 0Hz command
+	HAL_UART_Transmit(&huart2, sampleFreq10HzCMD, sizeof(sampleFreq10HzCMD), 100);
+	HAL_Delay(500);
+
+	//Send output format 9-byte/cm
+	HAL_UART_Transmit(&huart2, outForm9B_cmCMD, sizeof(outForm9B_cmCMD), 100);
+	HAL_Delay(500);
+
+	// Save
+	HAL_UART_Transmit(&huart2, saveSettingsCMD, sizeof(saveSettingsCMD), 100);
+	HAL_Delay(500);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if(huart->Instance == huart2.Instance){
+		HAL_Delay(100);
+	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+	HAL_UART_Receive_IT(&huart2, rx_buffer, RX_BUFFER_SIZE);
+	char msg[] = "Sent___\r\n";
+	if(huart->Instance == huart2.Instance){
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, 9, HAL_MAX_DELAY);
+	}
+}
+/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
